@@ -30,7 +30,7 @@ header = {
 response = requests.get('https://www.huxiu.com/article', headers=header)
 
 if (response.status_code == 200):
-    print('抓取成功！')
+    print('load success!')
     soup = BeautifulSoup(response.content, 'html5lib')
     articles = soup.find_all('div', class_='article-item article-item--big')
 
@@ -44,7 +44,7 @@ if (response.status_code == 200):
         try:
             cursor.execute(sql)
             connection.commit()
-            print('数据导入成功')
+            print('import data success!')
         except Exception:
             print(Exception)
             connection.rollback()
