@@ -32,19 +32,19 @@ response = requests.get('https://www.huxiu.com/article', headers=header)
 if (response.status_code == 200):
     print('load success!')
     soup = BeautifulSoup(response.content, 'html5lib')
-    articles = soup.find_all('div', class_='article-item article-item--big')
+    articles = soup.find_all('div', class_='article-item article-item--normal')
+    print(articles)
 
     for article in articles:
         url = 'www.huxiu.com' + article.a.get('href')
-        title = article.a.div.img.get('alt')
+        title = article.a.img.get('alt')
         scraped_at = time.strftime('%Y-%m-%d %H:%M:%S')
 
         sql = "INSERT INTO `huxiu` (`id`, `title`, `url`, `scraped_at`) VALUES ('%s', '%s', '%s', '%s')" % (uuid.uuid1(), title, url, scraped_at)
-
+        print(title)
         try:
             cursor.execute(sql)
             connection.commit()
-            print('import data success!')
         except Exception:
             print(Exception)
             connection.rollback()
